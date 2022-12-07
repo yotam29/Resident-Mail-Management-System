@@ -26,11 +26,20 @@ class GuiTier{
         return option;
     }
 
-    // show enrollment records returned from database
+    // show Residents records from database
     public void DisplayResidents(DataTable tableResidents){
         Console.WriteLine("---------------Resident List-------------------");
         foreach(DataRow row in tableResidents.Rows){
-           Console.WriteLine($"Resident ID: {row["id"]} \t Full Name: {row["full_name"]} \t Email:{row["email"]} \t Unit Number:{row["unit_number"]}");
+           Console.WriteLine($"Resident ID: {row["id"]} \t Date: {row["pdate"]} ");
         }
     }
+
+    public void DisplaySendEmail(DataTable tableSendEmail)
+    {
+        Console.WriteLine("---------------Package Kist-------------------");
+        foreach(DataRow row in tableSendEmail.Rows){
+            Console.WriteLine($"The package ID: {row["package_id"]} \t The Agency: {row["agencey"]}");
+        }
+    }
+
 }

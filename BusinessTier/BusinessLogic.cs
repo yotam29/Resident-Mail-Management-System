@@ -6,7 +6,7 @@ using Azure.Communication.Email.Models;
 class BusinessLogic
 {
    
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
         bool _continue = true;
         User user;
@@ -26,9 +26,9 @@ class BusinessLogic
                 {
                     //  email notifaction
                     case 1:
-                        DataTable tableEmail = database.Email();
-                        if(tableEmail != null)
-                            appGUI.DisplayResidents(tableEmail);
+                        DataTable tableSendEmail = database.SendEmail();
+                        if(tableSendEmail != null)
+                            appGUI.DisplaySendEmail(tableSendEmail);
                              string serviceConnectionString = "endpoint=https://yotamweek10communicationservice.communication.azure.com/;accesskey=6JDbNNs14u2wfYLDIbaftJ+s98Qdl3mmoy6LeqJy9Guvh3Z9PAo3Whs+O8uOhQ3LwM5bveQ09FPJSGmN9yobQw==";
         EmailClient emailClient = new EmailClient(serviceConnectionString);
         var subject = "New package";
@@ -38,15 +38,16 @@ class BusinessLogic
                     <html>
                         <body>
                             <h1 style=color:red>Hello dear resident your package arrived to the staff office </h1>
-                            <h4>Come to pick it up ASAP/h4>
+                            <h4>Come to pick it up ASAP</h4>
                             <p>Thank you for your cooperation </p>
                         </body>
                     </html>";
                     // mailfrom domain of your email service on Azure
         var sender = "DoNotReply@40321d49-6907-41f1-aab4-33a014265500.azurecomm.net";
 
-        Console.WriteLine("Please input an email address: ");
+        Console.WriteLine("Please package ID: ");
         string? inputEmail = Console.ReadLine();
+        inputEmail= "ysbalbul1@buffs.wtamu.edu";
         var emailRecipients = new EmailRecipients(new List<EmailAddress> {
             new EmailAddress(inputEmail) { DisplayName = "Testing" },
         });
@@ -93,9 +94,15 @@ class BusinessLogic
             Console.WriteLine($"Error in sending email, {ex}");
         }
                         break;
-                    // Add A Course
+                    // Records
                     case 2:
-
+                        DataTable tableResidents = database.ShowRecords();
+                        {
+                            if(tableResidents != null)
+                            {
+                                appGUI.DisplayResidents(tableResidents);
+                            }
+                        }
                         break;
                     // Log Out
                     case 3:

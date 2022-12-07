@@ -41,13 +41,13 @@ class DataTier{
 
  
     //checking emailes
-        public DataTable Email(){
+        public DataTable SendEmail(){
         MySqlConnection conn = new MySqlConnection(connStr);
         
         try
         {  
             conn.Open();
-            string procedure = "Email";
+            string procedure = "SendEmail";
             MySqlCommand cmd = new MySqlCommand(procedure, conn);
             MySqlDataReader rdr = cmd.ExecuteReader();
 
@@ -56,6 +56,31 @@ class DataTier{
             rdr.Close();
             conn.Close();
             return TableEmail;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            conn.Close();
+            return null!;
+        }
+    }
+
+        //checking records
+        public DataTable ShowRecords(){
+        MySqlConnection conn = new MySqlConnection(connStr);
+        
+        try
+        {  
+            conn.Open();
+            string procedure = "ShowRecords";
+            MySqlCommand cmd = new MySqlCommand(procedure, conn);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+
+            DataTable TableRecords = new DataTable();
+            TableRecords.Load(rdr);
+            rdr.Close();
+            conn.Close();
+            return TableRecords;
         }
         catch (Exception ex)
         {
